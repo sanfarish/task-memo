@@ -1,5 +1,5 @@
 import TodoList from "./components/TodoList"
-import TodoProvider from "./contexts/TodoContext"
+import TodoProvider from "./contexts/TodoProvider"
 
 function App() {
 

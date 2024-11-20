@@ -1,18 +1,13 @@
 import { useEffect } from "react"
-import { useTodo } from "../contexts/TodoContext"
+import { useTodo } from "../hooks/useTodo"
 import { todoAPI } from "../apis/todoAPI"
 
 function TodoList() {
     const [todos, dispatch] = useTodo()
     const { todo } = todos
-
-    async function getTodo() {
-        const data = await todoAPI({method: "get", url: "/todos"})
-        dispatch({ type: "SET_TODO", payload: data })
-    }
     
     useEffect(() => {
-        getTodo()
+        todoAPI({method: "get", url: "/todos"}, dispatch)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
