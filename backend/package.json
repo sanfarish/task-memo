@@ -1,0 +1,44 @@
+{
+  "name": "todo-memo-backend",
+  "version": "1.0.0",
+  "description": "Backend for todo-memo",
+  "main": "./src/app.js",
+  "scripts": {
+    "test": "jest",
+		"coverage": "jest --coverage",
+		"start": "node ./src/server.js",
+		"dev": "nodemon ./src/server.js",
+		"migrate": "npx sequelize-cli db:migrate",
+		"migrate:undo": "npx sequelize-cli db:migrate:undo:all",
+		"seed": "npx sequelize-cli db:seed:all",
+		"seed:undo": "npx sequelize-cli db:seed:undo:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanfarish/todo-memo.git"
+  },
+  "keywords": [
+    "todo-memo"
+  ],
+  "author": "Faris Hasan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanfarish/todo-memo/issues"
+  },
+  "homepage": "https://github.com/sanfarish/todo-memo#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.11.4",
+    "sequelize": "^6.37.5",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.7",
+    "sequelize-cli": "^6.6.2",
+    "supertest": "^7.0.0"
+  }
+}

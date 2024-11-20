@@ -1,0 +1,593 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Cafe POS - OpenAPI 3.0",
+    "description": "This is a Cafe POS Server based on the OpenAPI 3.0 specification.",
+    "contact": {
+      "email": "farisfalah@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about this project",
+    "url": "http:github.com/sanfarish/cafe-pos"
+  },
+  "servers": [
+    {
+      "url": "https://cafepos.farishasan.web.id/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "orders",
+      "description": "All of customers orders"
+    },
+    {
+      "name": "menus",
+      "description": "Tasty and fresh menus"
+    },
+    {
+      "name": "payments",
+      "description": "Many available payment methods"
+    },
+    {
+      "name": "category",
+      "description": "Simplified menu category for convenience"
+    }
+  ],
+  "paths": {
+    "/orders": {
+      "post": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Add a new order",
+        "description": "Add a new order",
+        "operationId": "addOrder",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Finds all orders",
+        "description": "Finds all orders",
+        "operationId": "findOrders",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid status value"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "delete": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Deletes an order",
+        "description": "delete an order",
+        "operationId": "deleteOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Order id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Invalid order id"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/menus": {
+      "post": {
+        "tags": [
+          "menus"
+        ],
+        "summary": "Add a new menu",
+        "description": "Add a new menu",
+        "operationId": "addMenu",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "menus"
+        ],
+        "summary": "Finds all menus",
+        "description": "Finds all menus",
+        "operationId": "findMenus",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid status value"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/menus/{id}": {
+      "delete": {
+        "tags": [
+          "menus"
+        ],
+        "summary": "Deletes a menu",
+        "description": "delete a menu",
+        "operationId": "deleteMenu",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Menu id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Invalid order id"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "menus"
+        ],
+        "summary": "Update an existing menu",
+        "description": "Update an existing menu by Id",
+        "operationId": "updateMenu",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Menu id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Menu not found"
+          }
+        }
+      }
+    },
+    "/payments": {
+      "post": {
+        "tags": [
+          "payments"
+        ],
+        "summary": "Add a new payment",
+        "description": "Add a new payment",
+        "operationId": "addPayment",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "payments"
+        ],
+        "summary": "Finds all payments",
+        "description": "Finds all payments",
+        "operationId": "findPayments",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid status value"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/payments/{id}": {
+      "delete": {
+        "tags": [
+          "payments"
+        ],
+        "summary": "Deletes a payment",
+        "description": "delete a payment",
+        "operationId": "deletePayment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Payment id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Invalid order id"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "payments"
+        ],
+        "summary": "Update an existing payment",
+        "description": "Update an existing payment by Id",
+        "operationId": "updatePayment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Payment id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Menu not found"
+          }
+        }
+      }
+    },
+    "/category": {
+      "post": {
+        "tags": [
+          "category"
+        ],
+        "summary": "Add a new category",
+        "description": "Add a new category",
+        "operationId": "addCategory",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "category"
+        ],
+        "summary": "Finds all category",
+        "description": "Finds all category",
+        "operationId": "findCategory",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid status value"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/category/{id}": {
+      "delete": {
+        "tags": [
+          "category"
+        ],
+        "summary": "Deletes a category",
+        "description": "delete a category",
+        "operationId": "deleteCategory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Category id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Invalid order id"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "category"
+        ],
+        "summary": "Update an existing category",
+        "description": "Update an existing category by Id",
+        "operationId": "updateCategory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Category id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Menu not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "petId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 198772
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "example": 7
+          },
+          "shipDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "Order Status",
+            "example": "approved",
+            "enum": [
+              "placed",
+              "approved",
+              "delivered"
+            ]
+          },
+          "complete": {
+            "type": "boolean"
+          }
+        },
+        "xml": {
+          "name": "order"
+        }
+      },
+      "Menu": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "petId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 198772
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "example": 7
+          },
+          "shipDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "Order Status",
+            "example": "approved",
+            "enum": [
+              "placed",
+              "approved",
+              "delivered"
+            ]
+          },
+          "complete": {
+            "type": "boolean"
+          }
+        },
+        "xml": {
+          "name": "order"
+        }
+      },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "petId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 198772
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "example": 7
+          },
+          "shipDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "Order Status",
+            "example": "approved",
+            "enum": [
+              "placed",
+              "approved",
+              "delivered"
+            ]
+          },
+          "complete": {
+            "type": "boolean"
+          }
+        },
+        "xml": {
+          "name": "order"
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "petId": {
+            "type": "integer",
+            "format": "int64",
+            "example": 198772
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "example": 7
+          },
+          "shipDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "Order Status",
+            "example": "approved",
+            "enum": [
+              "placed",
+              "approved",
+              "delivered"
+            ]
+          },
+          "complete": {
+            "type": "boolean"
+          }
+        },
+        "xml": {
+          "name": "order"
+        }
+      }
+    }
+  }
+}
