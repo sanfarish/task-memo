@@ -1,10 +1,11 @@
-# todo-memo [WIP]
-## react hooks used:
-* useEffect
-* useContext
-* useReducer
-## react hooks not used:
-* useState (used in another project)
-* useCallback
-* useMemo
-* useRef
+# Todo Memo App [WIP]
+## Tech Stack used
+### Language
+* Javascript
+### Frontend
+* Vite + React
+* React context API
+### Backend
+* Node + Express
+* MySQL
+* Sequelize (for ORM)

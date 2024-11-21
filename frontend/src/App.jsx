@@ -1,14 +1,12 @@
-import TodoList from "./components/TodoList"
+import Todos from "./components/Todos"
 import TodoProvider from "./contexts/TodoProvider"
 
 function App() {
 
   return (
-    <div className='main'>
-      <TodoProvider>
-        <TodoList />
-      </TodoProvider>
-    </div>
+    <TodoProvider>
+      <Todos />
+    </TodoProvider>
   )
 }
 
