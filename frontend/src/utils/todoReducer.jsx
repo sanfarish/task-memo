@@ -1,6 +1,6 @@
 export const initialState = {
     loading: false,
-    todo: [],
+    data: [],
     error: false,
     message: ""
 }
@@ -15,22 +15,22 @@ export function reducer(state, action) {
         case "SET_TODO":
             return {
                 ...state,
-                todo: action.payload
+                data: action.payload
             }
-        case "ADD_TODO":
+        case "POST_TODO":
             return {
                 ...state,
-                todo: [action.payload, ...state.todo]
+                data: [action.payload, ...state.data]
             }
         case "DEL_TODO":
             return {
                 ...state,
-                todo: state.todo.filter(item => item.id !== action.payload.id)
+                data: state.data.filter(item => item.id !== action.payload.id)
             }
-        case "PUT_TODO":
+        case "PATCH_TODO":
             return {
                 ...state,
-                todo: state.todo.map(item => item.id === action.payload.id ? action.payload.data : item)
+                data: state.data.map(item => item.id === action.payload.id ? action.payload.data : item)
             }
         case "SET_ERROR":
             return {

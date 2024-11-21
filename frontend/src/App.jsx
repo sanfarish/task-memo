@@ -6,7 +6,7 @@ function App() {
 
   return (
     <div className='bg-primary'>
-      <Container className='bg-primary-subtle text-primary-emphasis vh-100'>
+      <Container className='bg-primary-subtle text-primary-emphasis vh-100 d-flex flex-column'>
         <TodoProvider>
           <Todos />
         </TodoProvider>

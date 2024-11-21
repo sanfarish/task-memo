@@ -5,22 +5,22 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('todos', [
       {
-        todo: 'Run 10KM on friday 13th',
-        finished: false,
-        created_at: new Date(),
-        updated_at: new Date(),
+        task: 'Run 10KM on friday 13th',
+        done: false,
+        created_at: new Date("2024-11-20T08:00:00"),
+        updated_at: new Date("2024-11-20T08:00:00"),
       },
       {
-        todo: 'Held a meeting with team at the first day of the month',
-        finished: true,
-        created_at: new Date(),
-        updated_at: new Date(),
+        task: 'Held a meeting with team at the first day of the month',
+        done: true,
+        created_at: new Date("2024-11-20T08:12:34"),
+        updated_at: new Date("2024-11-20T08:00:00"),
       },
       {
-        todo: 'Record a new YouTube video at the end of the month',
-        finished: false,
-        created_at: new Date(),
-        updated_at: new Date(),
+        task: 'Record a new YouTube video at the end of the month',
+        done: false,
+        created_at: new Date("2024-11-20T08:56:08"),
+        updated_at: new Date("2024-11-20T08:00:00"),
       },
     ], {});
   },

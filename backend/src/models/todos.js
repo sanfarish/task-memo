@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   todos.init({
-    todo: {
-      type: DataTypes.STRING,
+    task: {
+      type: DataTypes.STRING(128),
       allowNull: false
     },
-    finished: {
+    done: {
       type: DataTypes.BOOLEAN,
       allowNull: false
     }

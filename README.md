@@ -4,6 +4,7 @@
 * Javascript
 ### Frontend
 * Vite + React
+* Bootstrap
 * React context API
 ### Backend
 * Node + Express

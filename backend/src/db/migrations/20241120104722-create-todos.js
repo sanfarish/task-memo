@@ -9,11 +9,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      todo: {
-        type: Sequelize.STRING,
-        allowNull: false
+      task: {
+        type: Sequelize.STRING(128),
+        allowNull: false,
+        unique: true
       },
-      finished: {
+      done: {
         type: Sequelize.BOOLEAN,
         allowNull: false
       },
