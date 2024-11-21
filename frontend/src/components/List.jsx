@@ -1,10 +1,18 @@
 import { useEffect } from "react"
+import Stack from "react-bootstrap/Stack"
+import Button from "react-bootstrap/Button"
 import { useTodo } from "../hooks/useTodo"
 import { todoAPI } from "../apis/todoAPI"
 
 export default function List() {
     const [todos, dispatch] = useTodo()
     const { todo } = todos
+    function style(finished) {
+        return {
+            color: finished ? "#888" : "#000",
+            textDecoration: finished ? "line-through" : "none"
+        }
+    }
     
     useEffect(() => {
         todoAPI({method: "get", url: "/todos"}, dispatch)
@@ -19,23 +27,31 @@ export default function List() {
         todoAPI({ method: "put", url: `/todos/${id}`, body: { finished } }, dispatch)
     }
 
+    function handleDate(date) {
+        const item = new Date(date)
+        const hour = item.getHours() + ":" + item.getMinutes()
+        const dating = item.getDate() + "/" + item.getMonth() + "/" + item.getFullYear()
+        return hour + " | " + dating
+    }
+
     return (
-        <ul>
+        <Stack>
             {todo != [] ? todo.map(item => {
                 return (
-                    <li className='list-item' key={item.id}>
+                    <Stack direction="horizontal" key={item.id}>
                         <div>
-                            <h2 style={{ color: item.finished ? "#888" : "#000" }}>{item.todo}</h2>
-                            <h4 style={{ color: item.finished ? "#888" : "#000" }}>{item.createdAt}</h4>
-                            <h4 style={{ color: item.finished ? "#888" : "#000" }}>{item.updatedAt}</h4>
+                            <h3 style={style(item.finished)}>{item.todo}</h3>
+                            <h6 style={style(item.finished)}>Created at: {handleDate(item.createdAt)}</h6>
+                            <h6 style={style(item.finished)}>Updated at: {handleDate(item.updatedAt)}</h6>
                         </div>
-                        <div>
-                            <button onClick={() => handleToggle(item.id, !item.finished)}>Toggle</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
-                        </div>
-                    </li>
+                        <div className="vr m-4 ms-auto" />
+                        <Stack direction="horizontal" gap={4}>
+                            <Button variant="success" onClick={() => handleToggle(item.id, !item.finished)}>Done</Button>
+                            <Button variant="danger" onClick={() => handleDelete(item.id)}>Delete</Button>
+                        </Stack>
+                    </Stack>
                 )
-            }) : <li>No data</li>}
-        </ul>
+            }) : <div>No data</div>}
+        </Stack>
     )
 }
