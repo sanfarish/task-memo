@@ -1,78 +1,100 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Cafe POS - OpenAPI 3.0",
-    "description": "This is a Cafe POS Server based on the OpenAPI 3.0 specification.",
+    "title": "Todo Memo - OpenAPI 3.0",
+    "description": "This is a documentation of my third project called \"Todo Memo\". It is a simple app to create and manage every task to do. The backend build by Node.js environment with Express.js server. It consist of CRUD operation and follows the guidelines of RESTful API. For now, this project is not using any API key or any forms of security. Update will follows!\n\n_Feel free to try this backend. Thank you!_\n\nSome useful links:\n- [Todo Memo repository](https://github.com/sanfarish/todo-memo)\n- [Todo Memo website](https://todomemo.farishasan.web.id)",
     "contact": {
       "email": "farisfalah@gmail.com"
     },
     "license": {
-      "name": "Apache 2.0",
+      "name": "ISC",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
     "version": "1.0.11"
   },
-  "externalDocs": {
-    "description": "Find out more about this project",
-    "url": "http:github.com/sanfarish/cafe-pos"
-  },
   "servers": [
     {
-      "url": "https://cafepos.farishasan.web.id/api/v1"
+      "url": "https://todo-memo.farishasan.web.id/api/v1",
+      "description": "Production server"
+    },
+    {
+      "url": "http://127.0.0.1:3002/api/v1",
+      "description": "Development server"
     }
   ],
   "tags": [
     {
-      "name": "orders",
-      "description": "All of customers orders"
-    },
-    {
-      "name": "menus",
-      "description": "Tasty and fresh menus"
-    },
-    {
-      "name": "payments",
-      "description": "Many available payment methods"
-    },
-    {
-      "name": "category",
-      "description": "Simplified menu category for convenience"
+      "name": "todos",
+      "description": "CRUD task to do list"
     }
   ],
   "paths": {
-    "/orders": {
-      "post": {
+    "/todos": {
+      "get": {
         "tags": [
-          "orders"
+          "todos"
         ],
-        "summary": "Add a new order",
-        "description": "Add a new order",
-        "operationId": "addOrder",
+        "summary": "Finds all tasks",
+        "description": "All tasks will be given without limit data and without security.",
+        "operationId": "findAllTodos",
         "responses": {
           "200": {
-            "description": "Successful operation"
-          },
-          "400": {
-            "description": "Invalid input"
+            "description": "Successfully find all tasks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Todos"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Todos"
+                  },
+                  "xml": {
+                    "name": "todos"
+                  }
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal server error"
           }
         }
       },
-      "get": {
+      "post": {
         "tags": [
-          "orders"
+          "todos"
         ],
-        "summary": "Finds all orders",
-        "description": "Finds all orders",
-        "operationId": "findOrders",
+        "summary": "Create a new task",
+        "description": "Create a new task with given data",
+        "operationId": "addNewTodo",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Todo"
+        },
         "responses": {
-          "200": {
-            "description": "successful operation"
+          "201": {
+            "description": "Task created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid status value"
+            "description": "Invalid data supplied"
           },
           "500": {
             "description": "Internal server error"
@@ -80,19 +102,19 @@
         }
       }
     },
-    "/orders/{id}": {
+    "/todos/{id}": {
       "delete": {
         "tags": [
-          "orders"
+          "todos"
         ],
-        "summary": "Deletes an order",
-        "description": "delete an order",
-        "operationId": "deleteOrder",
+        "summary": "Deletes a task",
+        "description": "Delete a task by given id",
+        "operationId": "deleteTodo",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Order id to delete",
+            "description": "ID of the task that needs to be deleted",
             "required": true,
             "schema": {
               "type": "integer",
@@ -102,174 +124,31 @@
         ],
         "responses": {
           "204": {
-            "description": "No content"
+            "description": "No content - Task deleted successfully"
           },
           "400": {
-            "description": "Invalid order id"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/menus": {
-      "post": {
-        "tags": [
-          "menus"
-        ],
-        "summary": "Add a new menu",
-        "description": "Add a new menu",
-        "operationId": "addMenu",
-        "responses": {
-          "200": {
-            "description": "Successful operation"
-          },
-          "400": {
-            "description": "Invalid input"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "menus"
-        ],
-        "summary": "Finds all menus",
-        "description": "Finds all menus",
-        "operationId": "findMenus",
-        "responses": {
-          "200": {
-            "description": "successful operation"
-          },
-          "400": {
-            "description": "Invalid status value"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/menus/{id}": {
-      "delete": {
-        "tags": [
-          "menus"
-        ],
-        "summary": "Deletes a menu",
-        "description": "delete a menu",
-        "operationId": "deleteMenu",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Menu id to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No content"
-          },
-          "400": {
-            "description": "Invalid order id"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "menus"
-        ],
-        "summary": "Update an existing menu",
-        "description": "Update an existing menu by Id",
-        "operationId": "updateMenu",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Menu id to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation"
-          },
-          "400": {
-            "description": "Invalid ID supplied"
+            "description": "Invalid id supplied"
           },
           "404": {
-            "description": "Menu not found"
-          }
-        }
-      }
-    },
-    "/payments": {
-      "post": {
-        "tags": [
-          "payments"
-        ],
-        "summary": "Add a new payment",
-        "description": "Add a new payment",
-        "operationId": "addPayment",
-        "responses": {
-          "200": {
-            "description": "Successful operation"
-          },
-          "400": {
-            "description": "Invalid input"
+            "description": "Task not found"
           },
           "500": {
             "description": "Internal server error"
           }
         }
       },
-      "get": {
+      "patch": {
         "tags": [
-          "payments"
+          "todos"
         ],
-        "summary": "Finds all payments",
-        "description": "Finds all payments",
-        "operationId": "findPayments",
-        "responses": {
-          "200": {
-            "description": "successful operation"
-          },
-          "400": {
-            "description": "Invalid status value"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/payments/{id}": {
-      "delete": {
-        "tags": [
-          "payments"
-        ],
-        "summary": "Deletes a payment",
-        "description": "delete a payment",
-        "operationId": "deletePayment",
+        "summary": "Updates a task status",
+        "description": "Updates a task status whether being finished or not",
+        "operationId": "updateTodo",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Payment id to delete",
+            "description": "ID of the task that needs to be updated",
             "required": true,
             "schema": {
               "type": "integer",
@@ -277,150 +156,33 @@
             }
           }
         ],
-        "responses": {
-          "204": {
-            "description": "No content"
-          },
-          "400": {
-            "description": "Invalid order id"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "payments"
-        ],
-        "summary": "Update an existing payment",
-        "description": "Update an existing payment by Id",
-        "operationId": "updatePayment",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Payment id to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Done"
+        },
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Task status updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid ID supplied"
+            "description": "Invalid id supplied"
           },
           "404": {
-            "description": "Menu not found"
-          }
-        }
-      }
-    },
-    "/category": {
-      "post": {
-        "tags": [
-          "category"
-        ],
-        "summary": "Add a new category",
-        "description": "Add a new category",
-        "operationId": "addCategory",
-        "responses": {
-          "200": {
-            "description": "Successful operation"
-          },
-          "400": {
-            "description": "Invalid input"
+            "description": "Task not found"
           },
           "500": {
             "description": "Internal server error"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "category"
-        ],
-        "summary": "Finds all category",
-        "description": "Finds all category",
-        "operationId": "findCategory",
-        "responses": {
-          "200": {
-            "description": "successful operation"
-          },
-          "400": {
-            "description": "Invalid status value"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/category/{id}": {
-      "delete": {
-        "tags": [
-          "category"
-        ],
-        "summary": "Deletes a category",
-        "description": "delete a category",
-        "operationId": "deleteCategory",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Category id to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No content"
-          },
-          "400": {
-            "description": "Invalid order id"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "category"
-        ],
-        "summary": "Update an existing category",
-        "description": "Update an existing category by Id",
-        "operationId": "updateCategory",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Category id to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation"
-          },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Menu not found"
           }
         }
       }
@@ -428,7 +190,10 @@
   },
   "components": {
     "schemas": {
-      "Order": {
+      "Todos": {
+        "required": [
+          "task"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -436,156 +201,140 @@
             "format": "int64",
             "example": 10
           },
-          "petId": {
-            "type": "integer",
-            "format": "int64",
-            "example": 198772
+          "task": {
+            "type": "string",
+            "description": "Task name",
+            "example": "Build a web on May 1st 2024"
           },
-          "quantity": {
-            "type": "integer",
-            "format": "int32",
-            "example": 7
+          "done": {
+            "type": "boolean",
+            "description": "Task status being finished/not",
+            "example": false
           },
-          "shipDate": {
+          "created_at": {
             "type": "string",
             "format": "date-time"
           },
-          "status": {
+          "updated_at": {
             "type": "string",
-            "description": "Order Status",
-            "example": "approved",
-            "enum": [
-              "placed",
-              "approved",
-              "delivered"
-            ]
-          },
-          "complete": {
-            "type": "boolean"
+            "format": "date-time"
           }
-        },
-        "xml": {
-          "name": "order"
         }
       },
-      "Menu": {
+      "ApiResponse": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 10
-          },
-          "petId": {
-            "type": "integer",
-            "format": "int64",
-            "example": 198772
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32",
-            "example": 7
-          },
-          "shipDate": {
-            "type": "string",
-            "format": "date-time"
-          },
           "status": {
             "type": "string",
-            "description": "Order Status",
-            "example": "approved",
-            "enum": [
-              "placed",
-              "approved",
-              "delivered"
-            ]
+            "example": "success"
           },
-          "complete": {
-            "type": "boolean"
+          "data": {
+            "$ref": "#/components/schemas/Todos"
           }
-        },
-        "xml": {
-          "name": "order"
+        }
+      }
+    },
+    "requestBodies": {
+      "Todo": {
+        "description": "Create a new task with given data",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "task"
+              ],
+              "type": "object",
+              "properties": {
+                "task": {
+                  "type": "string",
+                  "example": "Build a web on May 1st 2024"
+                }
+              }
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "required": [
+                "task"
+              ],
+              "type": "object",
+              "properties": {
+                "task": {
+                  "type": "string",
+                  "example": "Build a web on May 1st 2024"
+                }
+              },
+              "xml": {
+                "name": "todo"
+              }
+            }
+          },
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "required": [
+                "task"
+              ],
+              "type": "object",
+              "properties": {
+                "task": {
+                  "type": "string",
+                  "example": "Build a web on May 1st 2024"
+                }
+              }
+            }
+          }
         }
       },
-      "Payment": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 10
+      "Done": {
+        "description": "Update an existent task status to be finished or not",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "done"
+              ],
+              "type": "object",
+              "properties": {
+                "done": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
           },
-          "petId": {
-            "type": "integer",
-            "format": "int64",
-            "example": 198772
+          "application/xml": {
+            "schema": {
+              "required": [
+                "done"
+              ],
+              "type": "object",
+              "properties": {
+                "done": {
+                  "type": "boolean",
+                  "example": true
+                }
+              },
+              "xml": {
+                "name": "done"
+              }
+            }
           },
-          "quantity": {
-            "type": "integer",
-            "format": "int32",
-            "example": 7
-          },
-          "shipDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "status": {
-            "type": "string",
-            "description": "Order Status",
-            "example": "approved",
-            "enum": [
-              "placed",
-              "approved",
-              "delivered"
-            ]
-          },
-          "complete": {
-            "type": "boolean"
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "required": [
+                "done"
+              ],
+              "type": "object",
+              "properties": {
+                "done": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
           }
-        },
-        "xml": {
-          "name": "order"
-        }
-      },
-      "Category": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 10
-          },
-          "petId": {
-            "type": "integer",
-            "format": "int64",
-            "example": 198772
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32",
-            "example": 7
-          },
-          "shipDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "status": {
-            "type": "string",
-            "description": "Order Status",
-            "example": "approved",
-            "enum": [
-              "placed",
-              "approved",
-              "delivered"
-            ]
-          },
-          "complete": {
-            "type": "boolean"
-          }
-        },
-        "xml": {
-          "name": "order"
         }
       }
     }

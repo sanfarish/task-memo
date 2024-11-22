@@ -10,3 +10,4 @@
 * Node + Express
 * MySQL
 * Sequelize (for ORM)
+* Swagger (for documentation)
