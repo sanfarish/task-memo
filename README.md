@@ -1,4 +1,4 @@
-# Todo Memo App [WIP]
+# Todo Memo App
 ## Tech Stack used
 ### Language
 * Javascript

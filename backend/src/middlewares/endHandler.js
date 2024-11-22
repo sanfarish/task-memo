@@ -7,7 +7,7 @@ const error = (err, req, res, next) => {
 			err.statusCode = 500;
 		}
 		return res.status(err.statusCode).json({
-			message: err.message.toLowerCase(),
+			message: err.message,
 		});
 	}
 	next();

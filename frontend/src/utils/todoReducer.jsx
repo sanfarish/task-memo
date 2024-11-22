@@ -38,6 +38,12 @@ export function reducer(state, action) {
                 error: action.payload.error,
                 message: action.payload.message
             }
+        case "CLEAR_ERROR":
+            return {
+                ...state,
+                error: false,
+                message: ""
+            }
         default:
             break;
     }

@@ -5,7 +5,7 @@ module.exports = {
     "database": process.env.DEV_DB_NAME,
     "host": process.env.DEV_DB_HOSTNAME,
     "dialect": "mysql",
-    "logging": false,
+    "logging": false
   },
   "test": {
     "username": "root",
@@ -13,7 +13,7 @@ module.exports = {
     "database": "todo_memo",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false,
+    "logging": false
   },
   "production": {
     "username": process.env.PROD_DB_USERNAME,
@@ -21,6 +21,6 @@ module.exports = {
     "database": process.env.PROD_DB_NAME,
     "host": process.env.PROD_DB_HOSTNAME,
     "dialect": "postgres",
-    "logging": true,
+    "logging": true
   }
 }

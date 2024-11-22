@@ -1,15 +1,11 @@
 import { useState } from "react"
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
 import useTodo from "../hooks/useTodo"
 import todoAPI from "../apis/todoAPI"
 import List from "./List"
 
 export default function Todos() {
     const [todos, dispatch] = useTodo()
-    const { error, message } = todos
+    const { loading, error, message } = todos
     const [newTask, setNewTask] = useState("")
     
     function handleSubmit(e) {
@@ -20,24 +16,30 @@ export default function Todos() {
     
     return (
         <>
-            <Row  className="pt-2"><h1 className="col text-center">Todo Memo</h1></Row>
-            <Row className="px-5">
-                <Form onSubmit={handleSubmit} className="mb-3">
-                    <Row>
-                        <Form.Group className="col" controlId="formNewTask">
-                            <Form.Label visuallyHidden>New task</Form.Label>
-                            <Form.Control type="text" placeholder="Enter new task"
-                                value={newTask}
-                                onChange={e => setNewTask(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Col xs={2} className="d-grid gap-2">
-                            <Button variant="primary" type="submit">Add</Button>
-                        </Col>
-                    </Row>
-                </Form>
-            </Row>
-            {!error ? <List /> : <p>{message}</p>}
+            {loading ? <div className="position-absolute top-50 start-50 translate-middle text-center">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+                <p>Loading...</p>
+            </div> : null}
+            <div className="pt-2"><h1 className="col text-center">Todo Memo</h1></div>
+            <div className="px-5 mb-1">
+                <form onSubmit={handleSubmit} className="d-flex mb-3 gap-4">
+                    <label className="visually-hidden" htmlFor="newTaskInput">New task</label>
+                    <input type="text" placeholder="Enter new task" id="newTaskInput" maxLength={129}
+                        className="form-control form-control-lg"
+                        value={newTask}
+                        onChange={e => setNewTask(e.target.value)}
+                    />
+                    <button className="btn btn-primary btn-lg col-2 px-5" type="submit">Add</button>
+                </form>
+            </div>
+            {!error ? <List /> : <div className="alert alert-danger alert-dismissible fade show mx-5 mt-1" role="alert">
+                Error: {message}
+                <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    onClick={() => dispatch({ type: "CLEAR_ERROR" })}
+                ></button>
+            </div>}
         </>
     )
 }
