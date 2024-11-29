@@ -11,3 +11,5 @@
 * MySQL
 * Sequelize (for ORM)
 * Swagger (for documentation)
+## Screenshots
+![pic](screenshots/todo-memo.png)
