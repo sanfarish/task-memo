@@ -1,4 +1,4 @@
-# Todo Memo App
+# Task Memo App
 ## Tech Stack used
 ### Language
 * Javascript
@@ -12,4 +12,4 @@
 * Sequelize (for ORM)
 * Swagger (for documentation)
 ## Screenshots
-![pic](screenshots/todo-memo.png)
+![pic](screenshots/task-memo.png)

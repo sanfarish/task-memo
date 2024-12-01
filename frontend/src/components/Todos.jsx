@@ -22,7 +22,7 @@ export default function Todos() {
                 </div>
                 <p>Loading...</p>
             </div> : null}
-            <div className="pt-2"><h1 className="col text-center">Todo Memo</h1></div>
+            <div className="pt-2"><h1 className="col text-center">Task Memo</h1></div>
             <div className="px-5 mb-1">
                 <form onSubmit={handleSubmit} className="d-flex mb-3 gap-4">
                     <label className="visually-hidden" htmlFor="newTaskInput">New task</label>

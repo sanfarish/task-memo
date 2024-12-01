@@ -1,7 +1,7 @@
 {
-  "name": "todo-memo-backend",
+  "name": "task-memo-backend",
   "version": "1.0.0",
-  "description": "Backend for todo-memo",
+  "description": "Backend for Task Memo",
   "main": "./src/app.js",
   "scripts": {
     "test": "jest",
@@ -15,17 +15,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sanfarish/todo-memo.git"
+    "url": "git+https://github.com/sanfarish/task-memo.git"
   },
   "keywords": [
-    "todo-memo"
+    "task",
+    "memo",
+    "backend"
   ],
   "author": "Faris Hasan <farisfalah@gmail.com> (https://farishasan.web.id/)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sanfarish/todo-memo/issues"
+    "url": "https://github.com/sanfarish/task-memo/issues"
   },
-  "homepage": "https://github.com/sanfarish/todo-memo#readme",
+  "homepage": "https://github.com/sanfarish/task-memo#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

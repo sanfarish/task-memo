@@ -1,8 +1,8 @@
 {
-  "name": "todo-memo-frontend",
+  "name": "task-memo-frontend",
   "private": true,
-  "version": "1.0.0",
-  "description": "Frontend for todo-memo",
+  "version": "2.0.0",
+  "description": "Frontend for Task Memo",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,17 +12,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sanfarish/todo-memo.git"
+    "url": "git+https://github.com/sanfarish/task-memo.git"
   },
   "keywords": [
-    "todo-memo"
+    "task",
+    "memo",
+    "frontend"
   ],
   "author": "Faris Hasan <farisfalah@gmail.com> (https://farishasan.web.id/)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sanfarish/todo-memo/issues"
+    "url": "https://github.com/sanfarish/task-memo/issues"
   },
-  "homepage": "https://github.com/sanfarish/todo-memo#readme",
+  "homepage": "https://github.com/sanfarish/task-memo#readme",
   "dependencies": {
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
