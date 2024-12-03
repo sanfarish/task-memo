@@ -9,7 +9,7 @@
 ### Backend
 * Node + Express
 * MySQL
-* Sequelize (for ORM)
-* Swagger (for documentation)
+* Sequelize (ORM)
+* Swagger (documentation)
 ## Screenshots
 ![pic](screenshots/task-memo.png)
