@@ -1,13 +1,13 @@
 import { useEffect } from "react"
-import useTodo from "../hooks/useTodo"
-import todoAPI from "../apis/todoAPI"
+import useTask from "../hooks/useTask"
+import taskAPI from "../apis/taskAPI"
 
 export default function List() {
-    const [todos, dispatch] = useTodo()
-    const { data } = todos
+    const [tasks, dispatch] = useTask()
+    const { data } = tasks
     
     useEffect(() => {
-        todoAPI({method: "get", url: "/todos"}, dispatch)
+        taskAPI({method: "get", url: "/tasks"}, dispatch)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -27,11 +27,11 @@ export default function List() {
     }
 
     function handleToggle(id, done) {
-        todoAPI({ method: "patch", url: `/todos/${id}`, body: { done: !done } }, dispatch)
+        taskAPI({ method: "patch", url: `/tasks/${id}`, body: { done: !done } }, dispatch)
     }
 
     function handleDelete(id) {
-        todoAPI({ method: "delete", url: `/todos/${id}` }, dispatch)
+        taskAPI({ method: "delete", url: `/tasks/${id}` }, dispatch)
     }
 
     return (

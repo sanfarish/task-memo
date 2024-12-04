@@ -1,16 +1,16 @@
 import { useState } from "react"
-import useTodo from "../hooks/useTodo"
-import todoAPI from "../apis/todoAPI"
+import useTask from "../hooks/useTask"
+import taskAPI from "../apis/taskAPI"
 import List from "./List"
 
-export default function Todos() {
-    const [todos, dispatch] = useTodo()
-    const { loading, error, message } = todos
+export default function Tasks() {
+    const [tasks, dispatch] = useTask()
+    const { loading, error, message } = tasks
     const [newTask, setNewTask] = useState("")
     
     function handleSubmit(e) {
         e.preventDefault()
-        todoAPI({ method: "post", url: "/todos", body: { task: newTask } }, dispatch)
+        taskAPI({ method: "post", url: "/tasks", body: { task: newTask } }, dispatch)
         setNewTask("")
     }
     

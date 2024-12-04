@@ -2,7 +2,7 @@ import axios from "axios"
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL
 
-async function todoAPI({ method, url, body }, dispatch) {
+export default async function taskAPI({ method, url, body }, dispatch) {
     try {
         dispatch({  type: "SET_LOADING", payload: true })
         const res = await axios[method](url, body)
@@ -28,5 +28,3 @@ async function todoAPI({ method, url, body }, dispatch) {
         dispatch({  type: "SET_LOADING", payload: false })
     }
 }
-
-export default todoAPI
