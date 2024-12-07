@@ -1,14 +1,14 @@
 const models = require("../models");
-const asyncWrapper = require("../middlewares/asyncWrapper");
+const asyncHandler = require("express-async-handler");
 
-const getAll = asyncWrapper(async (req, res) => {
+const getAll = asyncHandler(async (req, res) => {
 	const data = await models.tasks.findAll({
 		order: [["created_at", "DESC"]]
 	});
 	res.status(200).json(data);
 });
 
-const post = asyncWrapper(async (req, res) => {
+const post = asyncHandler(async (req, res) => {
 	const data = await models.tasks.create(
 		{
 			task: req.body.task,
@@ -23,14 +23,14 @@ const post = asyncWrapper(async (req, res) => {
 	});
 });
 
-const del = asyncWrapper(async (req, res) => {
+const del = asyncHandler(async (req, res) => {
 	await models.tasks.destroy({
 		where: { id: req.params.id }
 	});
 	res.status(204).end();
 });
 
-const patch = asyncWrapper(async (req, res) => {
+const patch = asyncHandler(async (req, res) => {
 	await models.tasks.update(
 		{ done: req.body.done },
 		{ where: { id: req.params.id } }
