@@ -9,10 +9,9 @@ const api = require("./routes");
 const { error, notFound } = require("./middlewares/endHandler");
 
 app.use(logger("dev"));
-app.disable("x-powered-by")
 app.use(helmet());
+app.use(cors({ origin: process.env.CORS_ORIGIN }));
 app.use(express.json());
-app.use(cors());
 
 app.use("/favicon.ico", express.static("public/favicon.svg"));
 app.use("/api", api);
