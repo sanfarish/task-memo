@@ -22,6 +22,14 @@ module.exports = (sequelize, DataTypes) => {
     done: {
       type: DataTypes.BOOLEAN,
       allowNull: false
+    },
+    createdAt: {
+      type: DataTypes.DATE(3),
+      allowNull: false
+    },
+    updatedAt: {
+      type: DataTypes.DATE(3),
+      allowNull: false
     }
   }, {
     sequelize,

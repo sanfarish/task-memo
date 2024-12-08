@@ -1,20 +1,18 @@
-const models = require("../models");
+const { tasks } = require("../models");
 const asyncHandler = require("express-async-handler");
 
 const getAll = asyncHandler(async (req, res) => {
-	const data = await models.tasks.findAll({
-		order: [["created_at", "DESC"]]
+	const data = await tasks.findAll({
+		order: [["createdAt", "DESC"]]
 	});
 	res.status(200).json(data);
 });
 
 const post = asyncHandler(async (req, res) => {
-	const data = await models.tasks.create(
+	const data = await tasks.create(
 		{
 			task: req.body.task,
-			done: false,
-			created_at: new Date(),
-			updated_at: new Date()
+			done: false
 		}
 	);
 	res.status(201).json({
@@ -24,18 +22,18 @@ const post = asyncHandler(async (req, res) => {
 });
 
 const del = asyncHandler(async (req, res) => {
-	await models.tasks.destroy({
+	await tasks.destroy({
 		where: { id: req.params.id }
 	});
 	res.status(204).end();
 });
 
 const patch = asyncHandler(async (req, res) => {
-	await models.tasks.update(
+	await tasks.update(
 		{ done: req.body.done },
 		{ where: { id: req.params.id } }
 	);
-	const data = await models.tasks.findByPk(req.params.id);
+	const data = await tasks.findByPk(req.params.id);
 	res.status(200).json({
 		status: "success",
 		data,
