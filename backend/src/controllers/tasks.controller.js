@@ -15,10 +15,7 @@ const post = asyncHandler(async (req, res) => {
 			done: false
 		}
 	);
-	res.status(201).json({
-		status: "success",
-		data: data.dataValues,
-	});
+	res.status(201).json(data.dataValues);
 });
 
 const del = asyncHandler(async (req, res) => {
@@ -34,10 +31,7 @@ const patch = asyncHandler(async (req, res) => {
 		{ where: { id: req.params.id } }
 	);
 	const data = await tasks.findByPk(req.params.id);
-	res.status(200).json({
-		status: "success",
-		data,
-	});
+	res.status(200).json(data);
 });
 
 module.exports = { getAll, post, del, patch };

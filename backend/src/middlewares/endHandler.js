@@ -2,11 +2,11 @@ const path = require("path");
 
 const error = (err, req, res, next) => {
 	if (err) {
-		console.error(err);
-		if (!err.statusCode) {
-			err.statusCode = 500;
+		console.error(err.message);
+		if (!err.code) {
+			err.code = 500;
 		}
-		return res.status(err.statusCode).json({
+		return res.status(err.code).json({
 			message: err.message,
 		});
 	}

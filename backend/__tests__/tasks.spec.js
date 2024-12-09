@@ -43,4 +43,30 @@ describe("tasks route tests", () => {
             expect(res.body[0]).toMatchObject(mockResult);
         });
     });
+    
+    describe("POST /api/v1/tasks", () => {
+
+        const mockBody = { task: "mock task" };
+        const mockResult = {
+            ...mockBody,
+            id: 1,
+            done: false
+        };
+    
+        beforeEach(async () => {
+            await testDB.sequelize.sync({ force: true, match: /_test$/ });
+        });
+        
+        it("should create a new task", async () => {
+            
+            const res = await request(app).post("/api/v1/tasks").send(mockBody);
+            expect(res.statusCode).toBe(201);
+            expect(res.body).toBeInstanceOf(Object);
+            expect(res.body).toMatchObject(mockResult);
+            expect(isNaN(res.body.createdAt)).toBe(true);
+            expect(Date.parse(res.body.createdAt)).not.toBe(isNaN);
+            expect(isNaN(res.body.updatedAt)).toBe(true);
+            expect(Date.parse(res.body.updatedAt)).not.toBe(isNaN);
+        });
+    });
 });
