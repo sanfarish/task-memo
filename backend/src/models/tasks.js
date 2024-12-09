@@ -17,7 +17,10 @@ module.exports = (sequelize, DataTypes) => {
     task: {
       type: DataTypes.STRING(128),
       allowNull: false,
-      unique: true
+      unique: { msg: "the task already exists" },
+      validate: {
+        notNull: { msg: "the task cannot be empty" }
+      }
     },
     done: {
       type: DataTypes.BOOLEAN,

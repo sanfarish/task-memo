@@ -2,14 +2,16 @@ const path = require("path");
 
 const error = (err, req, res, next) => {
 	if (err) {
-		console.error(err.message);
 		if (!err.code) {
 			err.code = 500;
-		}
+		};
+		if (process.env.NODE_ENV !== "test") {
+			console.error(err.code + " error: " + err.message);
+		};
 		return res.status(err.code).json({
-			message: err.message,
+			error: err.message
 		});
-	}
+	};
 	next();
 };
 

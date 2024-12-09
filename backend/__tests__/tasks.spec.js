@@ -10,10 +10,6 @@ describe("tasks route tests", () => {
 
     const testDB = db;
     
-    beforeEach(async () => {
-        await testDB.sequelize.sync({ force: true, match: /_test$/ });
-    });
-    
     afterAll(async () => {
         await testDB.sequelize.drop();
         await testDB.sequelize.close();
@@ -24,19 +20,20 @@ describe("tasks route tests", () => {
         const mockData = { task: "mock task", done: false };
         const mockResult = {
             ...mockData,
-            id: 1,
+            id: null,
             createdAt: null,
             updatedAt: null
         };
     
         beforeEach(async () => {
+            await testDB.sequelize.sync({ force: true, match: /_test$/ });
             const res = await testDB.tasks.create(mockData);
+            mockResult.id = res.dataValues.id;
             mockResult.createdAt = res.dataValues.createdAt.toISOString();
             mockResult.updatedAt = res.dataValues.updatedAt.toISOString();
         });
         
         it("should return all tasks", async () => {
-            
             const res = await request(app).get("/api/v1/tasks");
             expect(res.statusCode).toBe(200);
             expect(res.body).toBeInstanceOf(Array);
@@ -58,15 +55,62 @@ describe("tasks route tests", () => {
         });
         
         it("should create a new task", async () => {
-            
             const res = await request(app).post("/api/v1/tasks").send(mockBody);
             expect(res.statusCode).toBe(201);
             expect(res.body).toBeInstanceOf(Object);
             expect(res.body).toMatchObject(mockResult);
-            expect(isNaN(res.body.createdAt)).toBe(true);
-            expect(Date.parse(res.body.createdAt)).not.toBe(isNaN);
-            expect(isNaN(res.body.updatedAt)).toBe(true);
-            expect(Date.parse(res.body.updatedAt)).not.toBe(isNaN);
+            expect(res.body.createdAt).toBeDefined();
+        });
+
+        it("should return error", async () => {
+            const res = await request(app).post("/api/v1/tasks").send({ task: "" });
+            expect(res.statusCode).toBe(400);
+            expect(res.body).toBeInstanceOf(Object);
+            expect(res.body.error).toBe("the task cannot be empty");
+        });
+    });
+
+    describe("PATCH /api/v1/tasks/:id", () => {
+        
+        const mockData = { task: "mock task", done: false };
+        const mockBody = { done: true };
+        let mockID = null;
+        const mockResult = {
+            task: mockData.task,
+            done: mockBody.done,
+            id: null
+        };
+        
+        beforeEach(async () => {
+            await testDB.sequelize.sync({ force: true, match: /_test$/ });
+            const res = await testDB.tasks.create(mockData);
+            mockID = res.dataValues.id;
+            mockResult.id = res.dataValues.id;
+        });
+        
+        it("should update existing task", async () => {
+            const res = await request(app).patch(`/api/v1/tasks/${mockID}`).send(mockBody);
+            expect(res.statusCode).toBe(200);
+            expect(res.body).toBeInstanceOf(Object);
+            expect(res.body).toMatchObject(mockResult);
+        });
+    });
+
+    describe("DELETE /api/v1/tasks/:id", () => {
+        
+        const mockData = { task: "mock task", done: false };
+        let mockID = null;
+        
+        beforeEach(async () => {
+            await testDB.sequelize.sync({ force: true, match: /_test$/ });
+            const res = await testDB.tasks.create(mockData);
+            mockID = res.dataValues.id;
+        });
+        
+        it("should delete existing task", async () => {
+            const res = await request(app).delete(`/api/v1/tasks/${mockID}`);
+            expect(res.statusCode).toBe(204);
+            expect(JSON.stringify(res.body)).toBe("{}")
         });
     });
 });
