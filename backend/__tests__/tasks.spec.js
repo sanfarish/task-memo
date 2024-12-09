@@ -11,7 +11,7 @@ describe("tasks route tests", () => {
     const testDB = db;
     
     afterAll(async () => {
-        await testDB.sequelize.drop();
+        jest.clearAllMocks();
         await testDB.sequelize.close();
     });
     
@@ -49,12 +49,11 @@ describe("tasks route tests", () => {
             id: 1,
             done: false
         };
-    
-        beforeEach(async () => {
-            await testDB.sequelize.sync({ force: true, match: /_test$/ });
-        });
         
         it("should create a new task", async () => {
+
+            await testDB.sequelize.sync({ force: true, match: /_test$/ });
+
             const res = await request(app).post("/api/v1/tasks").send(mockBody);
             expect(res.statusCode).toBe(201);
             expect(res.body).toBeInstanceOf(Object);
@@ -62,11 +61,48 @@ describe("tasks route tests", () => {
             expect(res.body.createdAt).toBeDefined();
         });
 
-        it("should return error", async () => {
+        it("should return error of body", async () => {
             const res = await request(app).post("/api/v1/tasks").send({ task: "" });
             expect(res.statusCode).toBe(400);
             expect(res.body).toBeInstanceOf(Object);
             expect(res.body.error).toBe("the task cannot be empty");
+        });
+        
+        it("should return error of data", async () => {
+            const res = await request(app).post("/api/v1/tasks").send(mockBody);
+            expect(res.statusCode).toBe(400);
+            expect(res.body).toBeInstanceOf(Object);
+            expect(res.body.error).toBe("the task already exists");
+        });
+    });
+
+    describe("DELETE /api/v1/tasks/:id", () => {
+        
+        const mockData = { task: "mock task", done: false };
+        let mockID = null;
+        
+        beforeEach(async () => {
+            await testDB.sequelize.sync({ force: true, match: /_test$/ });
+            const res = await testDB.tasks.create(mockData);
+            mockID = res.dataValues.id;
+        });
+        
+        it("should delete existing task", async () => {
+            const res = await request(app).delete(`/api/v1/tasks/${mockID}`);
+            expect(res.statusCode).toBe(204);
+            expect(JSON.stringify(res.body)).toBe("{}")
+        });
+
+        it("should return error of data", async () => {
+            const res = await request(app).delete(`/api/v1/tasks/${mockID + 1}`);
+            expect(res.statusCode).toBe(400);
+            expect(res.body.error).toBe("no task exists")
+        });
+
+        it("should return error of parameter", async () => {
+            const res = await request(app).delete("/api/v1/tasks/any");
+            expect(res.statusCode).toBe(400);
+            expect(res.body.error).toBe("parameter accept integer only")
         });
     });
 
@@ -94,23 +130,18 @@ describe("tasks route tests", () => {
             expect(res.body).toBeInstanceOf(Object);
             expect(res.body).toMatchObject(mockResult);
         });
-    });
-
-    describe("DELETE /api/v1/tasks/:id", () => {
         
-        const mockData = { task: "mock task", done: false };
-        let mockID = null;
-        
-        beforeEach(async () => {
-            await testDB.sequelize.sync({ force: true, match: /_test$/ });
-            const res = await testDB.tasks.create(mockData);
-            mockID = res.dataValues.id;
+        it("should return error of request", async () => {
+            const res = await request(app).patch(`/api/v1/tasks/${mockID}`).send({ done: "" });
+            expect(res.statusCode).toBe(400);
+            expect(res.body).toBeInstanceOf(Object);
+            expect(res.body.error).toBe("accept boolean only");
         });
-        
-        it("should delete existing task", async () => {
-            const res = await request(app).delete(`/api/v1/tasks/${mockID}`);
-            expect(res.statusCode).toBe(204);
-            expect(JSON.stringify(res.body)).toBe("{}")
+        it("should return error of data", async () => {
+            const res = await request(app).patch(`/api/v1/tasks/${mockID + 1}`).send(mockBody);
+            expect(res.statusCode).toBe(400);
+            expect(res.body).toBeInstanceOf(Object);
+            expect(res.body.error).toBe("no task exists");
         });
     });
 });
