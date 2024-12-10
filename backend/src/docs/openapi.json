@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Todo Memo - OpenAPI 3.0",
-    "description": "This is a documentation of my third project called \"Todo Memo\". It is a simple app to create and manage every task to do. The backend build by Node.js environment with Express.js server. It consist of CRUD operation and follows the guidelines of RESTful API. For now, this project is not using any API key or any forms of security. Update will follows!\n\n_Feel free to try this backend. Thank you!_\n\nSome useful links:\n- [Todo Memo repository](https://github.com/sanfarish/todo-memo)\n- [Todo Memo website](https://todomemo.farishasan.web.id)",
+    "title": "Task Memo v1.0 - OpenAPI 3.0",
+    "description": "This is a documentation of my third project called \"Task Memo\". It is a simple app to create and manage every task to do. The backend build by Node.js environment with Express.js server. It consist of CRUD operation and follows the guidelines of RESTful API. For now, this project is not using any API key or any forms of security. Update will follows!\n\n_Feel free to try this backend. Thank you!_\n\nSome useful links:\n- [Task Memo repository](https://github.com/sanfarish/task-memo)\n- [Task Memo website](https://taskmemo.farishasan.web.id)",
     "contact": {
       "email": "farisfalah@gmail.com"
     },
@@ -14,17 +14,17 @@
   },
   "servers": [
     {
-      "url": "https://todo-memo.farishasan.web.id/api/v1",
+      "url": "https://taskmemo.farishasan.web.id/api/v1",
       "description": "Production server"
     },
     {
-      "url": "http://127.0.0.1:3002/api/v1",
+      "url": "http://127.0.0.1:3003/api/v1",
       "description": "Development server"
     }
   ],
   "tags": [
     {
-      "name": "todos",
+      "name": "tasks",
       "description": "CRUD task to do list"
     }
   ],
@@ -32,7 +32,7 @@
     "/todos": {
       "get": {
         "tags": [
-          "todos"
+          "tasks"
         ],
         "summary": "Finds all tasks",
         "description": "All tasks will be given without limit data and without security.",
@@ -45,7 +45,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Todos"
+                    "$ref": "#/components/schemas/Tasks"
                   }
                 }
               },
@@ -53,29 +53,26 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Todos"
+                    "$ref": "#/components/schemas/Tasks"
                   },
                   "xml": {
-                    "name": "todos"
+                    "name": "tasks"
                   }
                 }
               }
             }
-          },
-          "500": {
-            "description": "Internal server error"
           }
         }
       },
       "post": {
         "tags": [
-          "todos"
+          "tasks"
         ],
         "summary": "Create a new task",
         "description": "Create a new task with given data",
         "operationId": "addNewTodo",
         "requestBody": {
-          "$ref": "#/components/requestBodies/Todo"
+          "$ref": "#/components/requestBodies/Task"
         },
         "responses": {
           "201": {
@@ -83,21 +80,25 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
+                  "$ref": "#/components/schemas/Tasks"
                 }
               },
               "application/xml": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
+                  "$ref": "#/components/schemas/Tasks"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid data supplied"
-          },
-          "500": {
-            "description": "Internal server error"
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -105,7 +106,7 @@
     "/todos/{id}": {
       "delete": {
         "tags": [
-          "todos"
+          "tasks"
         ],
         "summary": "Deletes a task",
         "description": "Delete a task by given id",
@@ -127,19 +128,30 @@
             "description": "No content - Task deleted successfully"
           },
           "400": {
-            "description": "Invalid id supplied"
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Task not found"
-          },
-          "500": {
-            "description": "Internal server error"
+            "description": "Task not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
       "patch": {
         "tags": [
-          "todos"
+          "tasks"
         ],
         "summary": "Updates a task status",
         "description": "Updates a task status whether being finished or not",
@@ -165,24 +177,35 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
+                  "$ref": "#/components/schemas/Tasks"
                 }
               },
               "application/xml": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
+                  "$ref": "#/components/schemas/Tasks"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid id supplied"
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Task not found"
-          },
-          "500": {
-            "description": "Internal server error"
+            "description": "Task not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -190,7 +213,7 @@
   },
   "components": {
     "schemas": {
-      "Todos": {
+      "Tasks": {
         "required": [
           "task"
         ],
@@ -199,16 +222,16 @@
           "id": {
             "type": "integer",
             "format": "int64",
-            "example": 10
+            "example": 1
           },
           "task": {
             "type": "string",
             "description": "Task name",
-            "example": "Build a web on May 1st 2024"
+            "example": "Build a web on May 1st"
           },
           "done": {
             "type": "boolean",
-            "description": "Task status being finished/not",
+            "description": "Task status being done/not",
             "example": false
           },
           "created_at": {
@@ -221,21 +244,19 @@
           }
         }
       },
-      "ApiResponse": {
+      "ErrorResponse": {
         "type": "object",
         "properties": {
-          "status": {
+          "error": {
             "type": "string",
-            "example": "success"
-          },
-          "data": {
-            "$ref": "#/components/schemas/Todos"
+            "description": "Error message",
+            "example": "invalid request"
           }
         }
       }
     },
     "requestBodies": {
-      "Todo": {
+      "Task": {
         "description": "Create a new task with given data",
         "required": true,
         "content": {
@@ -266,7 +287,7 @@
                 }
               },
               "xml": {
-                "name": "todo"
+                "name": "task"
               }
             }
           },
