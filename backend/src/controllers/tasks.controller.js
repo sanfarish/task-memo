@@ -28,7 +28,7 @@ const del = asyncHandler(async (req, res) => {
 		where: { id: req.params.id }
 	}));
 	if (confirm !== 1) {
-		throwError(400, "no task exists");
+		throwError(400, "task not found");
 	};
 	res.status(204).end();
 });
@@ -40,7 +40,7 @@ const patch = asyncHandler(async (req, res) => {
 		{ where: { id: req.params.id } }
 	));
 	if (confirm[0] !== 1) {
-		throwError(400, "no task exists");
+		throwError(400, "task not found");
 	};
 	const data = await dbHandler(tasks.findByPk(req.params.id));
 	res.status(200).json(data);

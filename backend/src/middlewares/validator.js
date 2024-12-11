@@ -1,11 +1,11 @@
 const { body, param } = require("express-validator");
 
-const validator = {
+module.exports = {
     tasks: {
         post: [
-            body("task", "invalid request").exists(),
-            body("task", "accept string only").isString(),
-            body("task", "the task cannot be empty").notEmpty(),
+            body("task", "task required").exists(),
+            body("task", "task accept string only").isString(),
+            body("task", "task cannot be empty").notEmpty(),
             body("task", "maximum task length is 128 characters").isLength({ max: 128 })
         ],
         del: [
@@ -13,10 +13,8 @@ const validator = {
         ],
         patch: [
             param("id", "parameter accept integer only").isInt(),
-            body("done", "invalid request").exists(),
-            body("done", "accept boolean only").isBoolean({ strict: true })
+            body("done", "done required").exists(),
+            body("done", "done accept boolean only").isBoolean({ strict: true })
         ]
     }
 };
-
-module.exports = validator;

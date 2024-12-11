@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     task: {
       type: DataTypes.STRING(128),
       allowNull: false,
-      unique: { msg: "the task already exists" },
+      unique: { msg: "duplicate task already exists" },
       validate: {
-        notNull: { msg: "the task cannot be empty" }
+        notNull: { msg: "task cannot be empty" }
       }
     },
     done: {
