@@ -65,14 +65,14 @@ describe("tasks route tests", () => {
             const res = await request(app).post("/api/v1/tasks").send({ task: "" });
             expect(res.statusCode).toBe(400);
             expect(res.body).toBeInstanceOf(Object);
-            expect(res.body.error).toBe("the task cannot be empty");
+            expect(res.body.error).toBe("task cannot be empty");
         });
         
         it("should return error of data", async () => {
             const res = await request(app).post("/api/v1/tasks").send(mockBody);
             expect(res.statusCode).toBe(400);
             expect(res.body).toBeInstanceOf(Object);
-            expect(res.body.error).toBe("the task already exists");
+            expect(res.body.error).toBe("duplicate task already exists");
         });
     });
 
@@ -96,7 +96,7 @@ describe("tasks route tests", () => {
         it("should return error of data", async () => {
             const res = await request(app).delete(`/api/v1/tasks/${mockID + 1}`);
             expect(res.statusCode).toBe(400);
-            expect(res.body.error).toBe("no task exists")
+            expect(res.body.error).toBe("task not found")
         });
 
         it("should return error of parameter", async () => {
@@ -135,13 +135,13 @@ describe("tasks route tests", () => {
             const res = await request(app).patch(`/api/v1/tasks/${mockID}`).send({ done: "" });
             expect(res.statusCode).toBe(400);
             expect(res.body).toBeInstanceOf(Object);
-            expect(res.body.error).toBe("accept boolean only");
+            expect(res.body.error).toBe("done accept boolean only");
         });
         it("should return error of data", async () => {
             const res = await request(app).patch(`/api/v1/tasks/${mockID + 1}`).send(mockBody);
             expect(res.statusCode).toBe(400);
             expect(res.body).toBeInstanceOf(Object);
-            expect(res.body.error).toBe("no task exists");
+            expect(res.body.error).toBe("task not found");
         });
     });
 });
