@@ -35,17 +35,18 @@ export default function List() {
     }
 
     return (
-        <div className="d-flex flex-column flex-grow-1 gap-2 mb-4 me-4 ps-5 pe-3 overflow-y-scroll">
+        <div className="d-flex flex-column flex-grow-1 gap-2 mb-4 me-0 me-md-4 ps-1 ps-md-5 pe-0 pe-md-3 overflow-y-scroll">
             {data.length >= 1 ? data.map(item => {
                 return (
-                    <div className="d-flex" key={item.id}>
+                    <div className="d-flex flex-column flex-md-row" key={item.id}>
                         <div className="overflow-x-hidden">
                             <h3 style={handleDone(item.done)}>{item.task}</h3>
                             <h6 style={handleDone(item.done)}>Created at: {handleDate(item.createdAt)}</h6>
                             <h6 style={handleDone(item.done)}>Updated at: {handleDate(item.updatedAt)}</h6>
                         </div>
-                        <div className="vr m-3 ms-auto" />
-                        <div className="d-flex align-items-center gap-4 px-1">
+                        <div className="vr d-none d-md-inline m-3 ms-auto" />
+                        <hr className="d-inline d-md-none m-3" />
+                        <div className="d-flex align-items-center justify-content-center gap-4 px-1">
                             <button type="button"
                                 className={`btn ${item.done ? "btn-secondary" : "btn-success"}`}
                                 onClick={() => handleToggle(item.id, item.done)}

@@ -23,18 +23,20 @@ export default function Tasks() {
                 <p>Loading...</p>
             </div> : null}
             <div className="pt-2"><h1 className="col text-center">Task Memo</h1></div>
-            <div className="px-5 mb-1">
-                <form onSubmit={handleSubmit} className="d-flex mb-3 gap-4">
+            <div className="px-0 px-md-5 mb-1">
+                <form onSubmit={handleSubmit} className="d-flex flex-column flex-md-row mb-3 gap-2 gap-md-4">
                     <label className="visually-hidden" htmlFor="newTaskInput">New task</label>
-                    <input type="text" placeholder="Enter new task" id="newTaskInput" maxLength={129}
+                    <input type="text" placeholder="Enter new task" id="newTaskInput" maxLength={128}
                         className="form-control form-control-lg"
                         value={newTask}
                         onChange={e => setNewTask(e.target.value)}
                     />
-                    <button className="btn btn-primary btn-lg col-2 px-5" type="submit">Add</button>
+                    <div className="d-grid col-md-2">
+                        <button className="btn btn-primary btn-lg" type="submit">Add</button>
+                    </div>
                 </form>
             </div>
-            {!error ? <List /> : <div className="alert alert-danger alert-dismissible fade show mx-5 mt-1" role="alert">
+            {!error ? <List /> : <div className="alert alert-danger alert-dismissible fade show mx-0 mx-md-5 mt-1" role="alert">
                 Error: {message}
                 <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"
                     onClick={() => dispatch({ type: "CLEAR_ERROR" })}

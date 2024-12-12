@@ -11,19 +11,23 @@ export default async function taskAPI({ method, url, body }, dispatch) {
                 dispatch({  type: "SET_TODO", payload: res.data })
                 break
             case "post":
-                dispatch({  type: "POST_TODO", payload: res.data.data })
+                dispatch({  type: "POST_TODO", payload: res.data })
                 break
             case "delete":
                 dispatch({  type: "DEL_TODO", payload: { id: Number(url.split("/").pop()) } })
                 break
             case "patch":
-                dispatch({  type: "PATCH_TODO", payload: { id: Number(url.split("/").pop()), data: res.data.data } })
+                dispatch({  type: "PATCH_TODO", payload: { id: Number(url.split("/").pop()), data: res.data } })
                 break
             default:
                 break
         }
     } catch (error) {
-        dispatch({  type: "SET_ERROR", payload: { error: true, message: error.message } })
+        if (error.response) {
+            dispatch({  type: "SET_ERROR", payload: { error: true, message: error.response.data.error } })
+        } else {
+            dispatch({  type: "SET_ERROR", payload: { error: true, message: error.message } })
+        };
     } finally {
         dispatch({  type: "SET_LOADING", payload: false })
     }
