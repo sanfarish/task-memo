@@ -1,4 +1,3 @@
 .vscode
 tools
-task_memo.session.sql
-task_memo_test.session.sql
+*\.sql
